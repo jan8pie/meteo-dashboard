@@ -1,0 +1,9 @@
+{
+  "name": "Meteo Slovenský Grob",
+  "short_name": "Meteo",
+  "start_url": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#11161c",
+  "theme_color": "#11161c"
+}

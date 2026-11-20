@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#11161c">
+<title>Meteo Slovenský Grob</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="tablet">
+<header class="top">
+  <div class="place">
+    <div class="place-name">Slovenský Grob</div>
+    <div class="place-date" id="date">&nbsp;</div>
+  </div>
+  <div class="clock" id="clock">--:--</div>
+  <div class="controls">
+    <div class="switch" role="group" aria-label="Režim zobrazenia">
+      <button type="button" id="mode-tablet" data-mode="tablet">Tablet</button>
+      <button type="button" id="mode-eink" data-mode="eink">Čítačka</button>
+    </div>
+    <button type="button" class="btn" id="fullscreen" title="Celá obrazovka">&#x26F6; Celá obrazovka</button>
+    <button type="button" class="btn" id="refresh" title="Obnoviť teraz">&#x21bb;</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="col col-left">
+    <div class="card hero">
+      <div class="hero-icon" id="hero-icon"></div>
+      <div class="hero-main">
+        <div class="hero-temp"><span id="temp">--</span><span class="unit">°C</span></div>
+        <div class="hero-desc" id="desc">Načítavam…</div>
+        <div class="hero-sub" id="feels">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <div class="card tile">
+        <div class="tile-label">Tlak</div>
+        <div class="tile-value"><span id="pressure">--</span> <small>hPa</small> <span class="trend" id="p-arrow"></span></div>
+        <div class="tile-sub" id="p-trend">&nbsp;</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Vlhkosť</div>
+        <div class="tile-value"><span id="humidity">--</span> <small>%</small></div>
+        <div class="tile-sub" id="dew">&nbsp;</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Vietor</div>
+        <div class="tile-value"><span id="wind">--</span> <small>km/h</small> <span class="wind-arrow" id="wind-arrow"></span></div>
+        <div class="tile-sub" id="wind-sub">&nbsp;</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Zrážky dnes</div>
+        <div class="tile-value"><span id="rain">--</span> <small>mm</small></div>
+        <div class="tile-sub" id="rain-sub">&nbsp;</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Slnko</div>
+        <div class="tile-value sun"><span id="sunrise">--</span> <small>–</small> <span id="sunset">--</span></div>
+        <div class="tile-sub" id="daylen">&nbsp;</div>
+      </div>
+      <div class="card tile">
+        <div class="tile-label">Ovzdušie</div>
+        <div class="tile-value"><span id="aqi">--</span></div>
+        <div class="tile-sub" id="aqi-sub">&nbsp;</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="col col-right">
+    <div class="card chart-card">
+      <div class="chart-head">
+        <span class="chart-title">Teplota °C</span>
+        <span class="chart-note" id="t-note">posledných 24 h a predpoveď na 24 h</span>
+      </div>
+      <div class="chart" id="chart-temp"></div>
+    </div>
+    <div class="card chart-card">
+      <div class="chart-head">
+        <span class="chart-title">Tlak hPa</span>
+        <span class="chart-note" id="p-note">prepočítaný na hladinu mora</span>
+      </div>
+      <div class="chart" id="chart-pressure"></div>
+    </div>
+  </section>
+
+  <section class="card days" id="days"></section>
+</main>
+
+<footer class="foot">
+  <span id="status">Načítavam údaje…</span>
+  <span class="src">Zdroj: Open-Meteo.com</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

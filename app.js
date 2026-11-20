@@ -13,7 +13,7 @@
     '&past_days=1&forecast_days=7' +
     '&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m' +
     '&hourly=temperature_2m,pressure_msl,dew_point_2m' +
-    '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset,wind_speed_10m_max';
+    '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset,wind_speed_10m_max,wind_gusts_10m_max';
   var AIR_URL = 'https://air-quality-api.open-meteo.com/v1/air-quality' +
     '?latitude=' + LAT + '&longitude=' + LON +
     '&timezone=' + encodeURIComponent(TZ) +
@@ -461,9 +461,19 @@
       html += '<div class="day"><div class="day-name">' + name + '</div>' +
         '<div class="ic" title="' + weatherText(dl.weather_code[i]) + '">' + iconSVG(dl.weather_code[i], 1) + '</div>' +
         '<div><span class="day-max">' + fmt(dl.temperature_2m_max[i], 0) + '°</span> <span class="day-min">' + fmt(dl.temperature_2m_min[i], 0) + '°</span></div>' +
-        '<div class="day-rain">' + (pr >= 0.1 ? fmt(pr, 1) + ' mm' : '') + '</div></div>';
+        '<div class="day-rain">' + (pr >= 0.1 ? fmt(pr, 1) + ' mm' : '') + '</div>' +
+        windLine(dl.wind_speed_10m_max && dl.wind_speed_10m_max[i], dl.wind_gusts_10m_max && dl.wind_gusts_10m_max[i]) +
+        '</div>';
     }
     $('days').innerHTML = html;
+  }
+
+  // vietor v predpovedi: max. rýchlosť a nárazy; silné nárazy (od 50 km/h) zvýraznené
+  function windLine(speed, gust) {
+    if (speed === null || speed === undefined) return '';
+    var strong = gust !== null && gust !== undefined && gust >= 50;
+    return '<div class="day-wind' + (strong ? ' strong' : '') + '">vietor ' + fmt(speed, 0) +
+      (gust !== null && gust !== undefined ? '<br>nárazy ' + fmt(gust, 0) : '') + ' <small>km/h</small></div>';
   }
 
   /* ---------------- Štart ---------------- */

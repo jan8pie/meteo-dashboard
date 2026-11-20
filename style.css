@@ -148,3 +148,10 @@ body.eink .day + .day { border-left: 1px solid #000; }
   .day:nth-child(5) { border-left: 0; }
   body.eink .day:nth-child(5) { border-left: 1px solid #000; }
 }
+
+/* vietor v predpovedi */
+.day-wind { font-size: 0.8em; margin-top: 2px; }
+.day-wind small { font-size: 0.85em; }
+.day-wind.strong { font-weight: bold; }
+body.tablet .day-wind { color: #93a1b0; }
+body.tablet .day-wind.strong { color: #f2b84b; }

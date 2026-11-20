@@ -220,7 +220,7 @@
     switch (k) {
       case 'clear': body = small; break;
       case 'partly':
-        body = '<g transform="translate(-3.5 -3.5) scale(.75)">' + small + '</g>' +
+        body = '<g transform="translate(-1.5 -1.5) scale(.72)">' + small + '</g>' +
           '<g transform="translate(3 3) scale(.85)">' + CLOUD + '</g>'; break;
       case 'fog': body = CLOUD_UP + '<path d="M4 18.5h16M6 21.5h12"/>'; break;
       case 'rain': body = CLOUD_UP + '<path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>'; break;
@@ -228,7 +228,7 @@
       case 'storm': body = CLOUD_UP + '<path d="M12.5 15.5l-2.5 4h3.5l-2 3.5"/>'; break;
       default: body = CLOUD;
     }
-    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg>';
+    return '<svg viewBox="-1 -1 26 26" overflow="visible" style="overflow:visible" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg>';
   }
   function weatherText(c) {
     var t = {

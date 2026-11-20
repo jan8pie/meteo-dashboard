@@ -1,3 +1,13 @@
+/* Písmo Nunito (zaoblené), uložené priamo v repozitári, licencia OFL (fonts/OFL-LICENSE.txt) */
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 300; font-display: swap; src: url(fonts/nunito-latin-300-normal.woff2) format('woff2'), url(fonts/nunito-latin-300-normal.woff) format('woff'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 300; font-display: swap; src: url(fonts/nunito-latin-ext-300-normal.woff2) format('woff2'), url(fonts/nunito-latin-ext-300-normal.woff) format('woff'); unicode-range: U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/nunito-latin-400-normal.woff2) format('woff2'), url(fonts/nunito-latin-400-normal.woff) format('woff'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/nunito-latin-ext-400-normal.woff2) format('woff2'), url(fonts/nunito-latin-ext-400-normal.woff) format('woff'); unicode-range: U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/nunito-latin-700-normal.woff2) format('woff2'), url(fonts/nunito-latin-700-normal.woff) format('woff'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url(fonts/nunito-latin-ext-700-normal.woff2) format('woff2'), url(fonts/nunito-latin-ext-700-normal.woff) format('woff'); unicode-range: U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/nunito-latin-800-normal.woff2) format('woff2'), url(fonts/nunito-latin-800-normal.woff) format('woff'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 800; font-display: swap; src: url(fonts/nunito-latin-ext-800-normal.woff2) format('woff2'), url(fonts/nunito-latin-ext-800-normal.woff) format('woff'); unicode-range: U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+
 /* Zámerne jednoduché CSS (flexbox s -webkit- predponami, bez grid/var/clamp),
    aby fungovalo aj v starých Android prehliadačoch.
    Všetky veľkosti sú v em a základné písmo sa odvíja od menšieho rozmeru
@@ -6,7 +16,7 @@
 * { -webkit-box-sizing: border-box; box-sizing: border-box; }
 html, body { margin: 0; padding: 0; height: 100%; }
 body {
-  font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: Nunito, Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   font-size: 2.2vmin;
   line-height: 1.25;
@@ -206,3 +216,31 @@ html.port .place-date { font-size: 1.2em; }
 html.port .col-left, html.port .col-right, html.port .chart-card { width: 100% !important; }
 html.port .tiles { -webkit-flex: none; flex: none; }
 .hero-icon svg, .day .ic svg { overflow: visible; }
+
+/* ---------- Dlaždice: malý popis, veľká a zreteľná hodnota ---------- */
+.tile { display: -webkit-flex; display: flex; -webkit-flex-direction: column; flex-direction: column; -webkit-justify-content: center; justify-content: center; }
+.tile-label { font-size: 0.7em; letter-spacing: 0.06em; }
+.tile.big .tile-label { font-size: 0.75em; }
+.tile.big .tile-value { font-size: 3.8em; line-height: 1; margin: 0.05em 0; }
+.tile.big .tile-sub { font-size: 0.95em; }
+body.eink .tile.big .tile-value { font-size: 3.4em; }
+body.eink .tile-value, body.eink .hero-temp, body.eink .clock { font-weight: 800; }
+body.eink .tile-label { font-weight: 700; }
+.hero-temp { font-weight: 400; }
+.clock { font-weight: 400; }
+
+@media (max-aspect-ratio: 17/10) {
+  .tiles .tile { padding: 0.35em 0.7em; }
+  .tiles .tile-label, .tiles .tile-value { display: block; margin-right: 0; }
+  .tiles .tile-value { font-size: 2.1em; line-height: 1.05; }
+  body.eink .tiles .tile-value { font-size: 2.1em; }
+  body.eink .tiles .tile-label { font-size: 0.65em; }
+  .tiles .tile-sub { font-size: 0.75em; }
+}
+html.port .tile.big .tile-value { font-size: 3.6em; }
+html.port .tiles .tile-value { font-size: 2.4em; }
+html.port .tiles .tile-sub { font-size: 0.85em; }
+.tiles .tile-value { font-size: 1.3em; }
+@media (max-aspect-ratio: 17/10) { .tiles .tile-value { font-size: 2.1em; } }
+html.port .tiles .tile-value { font-size: 2.3em; }
+html:not(.port) body.eink .tile.big .tile-value { font-size: 2.9em; }

@@ -526,6 +526,8 @@
     rotation = getRotation();
     applyLayout();
 
+    // service worker: potrebný na inštaláciu ako aplikácia (staré prehliadače ho nemajú)
+    try { if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js'); } catch (e) {}
     loadCache();
     setMode(getMode(), false);
     load();

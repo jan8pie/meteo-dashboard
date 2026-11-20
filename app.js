@@ -250,7 +250,9 @@
 
     var eink = isEink();
     var W = el.clientWidth || 600, H = el.clientHeight || 190;
-    var L = 40, R = 12, T = 18, B = 24;
+    var fs = parseFloat(window.getComputedStyle ? getComputedStyle(document.body).fontSize : 16) || 16;
+    fs = Math.max(11, Math.round(fs * 0.75));
+    var L = Math.round(fs * 3.4), R = 12, T = Math.round(fs * 1.5), B = Math.round(fs * 2);
     var lo = Infinity, hi = -Infinity;
     for (i = 0; i < pts.length; i++) { if (pts[i].v < lo) lo = pts[i].v; if (pts[i].v > hi) hi = pts[i].v; }
     var step = niceStep(Math.max(hi - lo, opt.minRange), 3);
@@ -271,7 +273,7 @@
     for (var v = ylo; v <= yhi + 1e-9; v += step) {
       var y = Y(v).toFixed(1);
       s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="' + grid + '" stroke-width="1"' + (eink ? ' stroke-dasharray="2 4"' : '') + '/>';
-      s += '<text x="' + (L - 6) + '" y="' + (+y + 4) + '" text-anchor="end" font-size="12" fill="' + mute + '">' + fmt(v, step < 1 ? 1 : 0) + '</text>';
+      s += '<text x="' + (L - 6) + '" y="' + (+y + fs / 3) + '" text-anchor="end" font-size="' + fs + '" fill="' + mute + '">' + fmt(v, step < 1 ? 1 : 0) + '</text>';
     }
     // os X: každých 6 hodín
     var d = new Date(t0); d.setMinutes(0, 0, 0);
@@ -280,7 +282,7 @@
       var x = X(d.getTime()).toFixed(1);
       var lbl = d.getHours() === 0 ? DAYS_SHORT[d.getDay()] : d.getHours() + ':00';
       s += '<line x1="' + x + '" x2="' + x + '" y1="' + T + '" y2="' + (H - B) + '" stroke="' + grid + '" stroke-width="1"/>';
-      s += '<text x="' + x + '" y="' + (H - 6) + '" text-anchor="middle" font-size="12" fill="' + mute + '"' + (d.getHours() === 0 ? ' font-weight="bold"' : '') + '>' + lbl + '</text>';
+      s += '<text x="' + x + '" y="' + (H - fs / 2) + '" text-anchor="middle" font-size="' + fs + '" fill="' + mute + '"' + (d.getHours() === 0 ? ' font-weight="bold"' : '') + '>' + lbl + '</text>';
     }
 
     // čiara: minulosť plná, predpoveď prerušovaná
@@ -322,14 +324,14 @@
       var x = X(p.t), y = Y(p.v);
       var anchor = x < L + 30 ? 'start' : (x > W - R - 30 ? 'end' : 'middle');
       return '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="3" fill="' + line + '"/>' +
-        '<text x="' + x.toFixed(1) + '" y="' + (above ? y - 7 : y + 16).toFixed(1) + '" text-anchor="' + anchor + '" font-size="12" fill="' + ink + '">' + fmt(p.v, opt.dec) + '</text>';
+        '<text x="' + x.toFixed(1) + '" y="' + (above ? y - fs * 0.6 : y + fs * 1.35).toFixed(1) + '" text-anchor="' + anchor + '" font-size="' + fs + '" fill="' + ink + '">' + fmt(p.v, opt.dec) + '</text>';
     }
     if (Math.abs(X(maxP.t) - X(nowT)) > 34) s += mark(maxP, true);
     if (Math.abs(X(minP.t) - X(nowT)) > 34) s += mark(minP, false);
     if (curV !== null) {
       var cy = Y(curV);
       s += '<circle cx="' + nx + '" cy="' + cy.toFixed(1) + '" r="5" fill="' + (eink ? '#fff' : '#1b232c') + '" stroke="' + line + '" stroke-width="2.5"/>';
-      s += '<text x="' + (+nx + 8) + '" y="' + (cy < T + 14 ? cy + 16 : cy - 8).toFixed(1) + '" font-size="13" font-weight="bold" fill="' + ink + '">' + fmt(curV, opt.dec) + '</text>';
+      s += '<text x="' + (+nx + 8) + '" y="' + (cy < T + fs ? cy + fs * 1.4 : cy - fs * 0.7).toFixed(1) + '" font-size="' + Math.round(fs * 1.15) + '" font-weight="bold" fill="' + ink + '">' + fmt(curV, opt.dec) + '</text>';
     }
     s += '<g id="hover-' + el.id + '"></g></svg>';
     el.innerHTML = s;
@@ -345,13 +347,13 @@
       if (!best || best.t < t0 || best.t > t1) return;
       var bx = X(best.t), by = Y(best.v), bd = new Date(best.t);
       var label = DAYS_SHORT[bd.getDay()] + ' ' + bd.getHours() + ':00  ' + fmt(best.v, opt.dec) + ' ' + opt.unit;
-      var tx = Math.min(Math.max(bx, L + 70), W - R - 70);
+      var tw = fs * 12, tx = Math.min(Math.max(bx, L + tw / 2), W - R - tw / 2);
       var g = document.getElementById('hover-' + el.id);
       if (g) g.innerHTML =
         '<line x1="' + bx + '" x2="' + bx + '" y1="' + T + '" y2="' + (H - B) + '" stroke="' + ink + '" stroke-width="1"/>' +
         '<circle cx="' + bx + '" cy="' + by + '" r="4.5" fill="' + line + '" stroke="#1b232c" stroke-width="2"/>' +
-        '<rect x="' + (tx - 68) + '" y="0" width="136" height="17" rx="4" fill="#26313d"/>' +
-        '<text x="' + tx + '" y="13" text-anchor="middle" font-size="12" fill="#e8edf2">' + label + '</text>';
+        '<rect x="' + (tx - tw / 2) + '" y="0" width="' + tw + '" height="' + (fs * 1.4) + '" rx="4" fill="#26313d"/>' +
+        '<text x="' + tx + '" y="' + (fs * 1.05) + '" text-anchor="middle" font-size="' + fs + '" fill="#e8edf2">' + label + '</text>';
     };
     el.onmouseleave = el.ontouchend = function () {
       var g = document.getElementById('hover-' + el.id);
@@ -375,6 +377,17 @@
     if (state.nextAt) parts.push('ďalšia obnova ' + hhmm(state.nextAt));
     el.textContent = parts.join(' · ') || 'Načítavam údaje…';
     el.className = state.error ? 'err' : '';
+  }
+
+  function drawCharts() {
+    var f = state.forecast; if (!f) return;
+    var h = f.hourly, c = f.current, times = [];
+    for (var i = 0; i < h.time.length; i++) times.push(parseLocal(h.time[i]));
+    drawChart($('chart-temp'), times, h.temperature_2m,
+      { color: '#f2994a', dec: 1, unit: '°C', minRange: 4, zero: true, current: c.temperature_2m });
+    drawChart($('chart-pressure'), times, h.pressure_msl,
+      { color: '#5aa9e6', dec: 0, unit: 'hPa', minRange: 6, current: c.pressure_msl });
+
   }
 
   function render() {
@@ -446,12 +459,6 @@
       setText('aqi-sub', 'Index ' + fmt(a.european_aqi, 0) + ' · PM2,5 ' + fmt(a.pm2_5, 0) + ' · PM10 ' + fmt(a.pm10, 0));
     } else { setText('aqi', '--'); setText('aqi-sub', 'nedostupné'); }
 
-    // grafy
-    drawChart($('chart-temp'), times, h.temperature_2m,
-      { color: '#f2994a', dec: 1, unit: '°C', minRange: 4, zero: true, current: c.temperature_2m });
-    drawChart($('chart-pressure'), times, h.pressure_msl,
-      { color: '#5aa9e6', dec: 0, unit: 'hPa', minRange: 6, current: c.pressure_msl });
-
     // predpoveď na dni
     var html = '';
     for (i = ti; i < dl.time.length && i < ti + 7; i++) {
@@ -466,6 +473,9 @@
         '</div>';
     }
     $('days').innerHTML = html;
+    // grafy až po vykreslení zvyšku stránky, aby mali správnu výšku
+    drawCharts();
+    setTimeout(drawCharts, 300);
   }
 
   // vietor v predpovedi: max. rýchlosť a nárazy; silné nárazy (od 50 km/h) zvýraznené

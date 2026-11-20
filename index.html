@@ -11,18 +11,19 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="tablet">
+<div class="page">
 <header class="top">
-  <div class="place">
-    <div class="place-name">Slovenský Grob</div>
-    <div class="place-date" id="date">&nbsp;</div>
-  </div>
   <div class="clock" id="clock">--:--</div>
+  <div class="place">
+    <div class="place-date" id="date">&nbsp;</div>
+    <div class="place-name">Slovenský Grob</div>
+  </div>
   <div class="controls">
     <div class="switch" role="group" aria-label="Režim zobrazenia">
       <button type="button" id="mode-tablet" data-mode="tablet">Tablet</button>
       <button type="button" id="mode-eink" data-mode="eink">Čítačka</button>
     </div>
-    <button type="button" class="btn" id="fullscreen" title="Celá obrazovka">&#x26F6; Celá obrazovka</button>
+    <button type="button" class="btn" id="fullscreen" title="Celá obrazovka">&#x26F6;</button>
     <button type="button" class="btn" id="refresh" title="Obnoviť teraz">&#x21bb;</button>
   </div>
 </header>
@@ -38,21 +39,24 @@
       </div>
     </div>
 
-    <div class="tiles">
-      <div class="card tile">
+    <div class="big-tiles">
+      <div class="card tile big">
+        <div class="tile-label">Vietor</div>
+        <div class="tile-value"><span id="wind">--</span> <small>km/h</small> <span class="wind-arrow" id="wind-arrow"></span></div>
+        <div class="tile-sub" id="wind-sub">&nbsp;</div>
+      </div>
+      <div class="card tile big">
         <div class="tile-label">Tlak</div>
         <div class="tile-value"><span id="pressure">--</span> <small>hPa</small> <span class="trend" id="p-arrow"></span></div>
         <div class="tile-sub" id="p-trend">&nbsp;</div>
       </div>
+    </div>
+
+    <div class="tiles">
       <div class="card tile">
         <div class="tile-label">Vlhkosť</div>
         <div class="tile-value"><span id="humidity">--</span> <small>%</small></div>
         <div class="tile-sub" id="dew">&nbsp;</div>
-      </div>
-      <div class="card tile">
-        <div class="tile-label">Vietor</div>
-        <div class="tile-value"><span id="wind">--</span> <small>km/h</small> <span class="wind-arrow" id="wind-arrow"></span></div>
-        <div class="tile-sub" id="wind-sub">&nbsp;</div>
       </div>
       <div class="card tile">
         <div class="tile-label">Zrážky dnes</div>
@@ -61,7 +65,7 @@
       </div>
       <div class="card tile">
         <div class="tile-label">Slnko</div>
-        <div class="tile-value sun"><span id="sunrise">--</span> <small>–</small> <span id="sunset">--</span></div>
+        <div class="tile-value"><span id="sunrise">--</span><small> – </small><span id="sunset">--</span></div>
         <div class="tile-sub" id="daylen">&nbsp;</div>
       </div>
       <div class="card tile">
@@ -76,26 +80,27 @@
     <div class="card chart-card">
       <div class="chart-head">
         <span class="chart-title">Teplota °C</span>
-        <span class="chart-note" id="t-note">posledných 24 h a predpoveď na 24 h</span>
+        <span class="chart-note">24 h dozadu · predpoveď 24 h</span>
       </div>
       <div class="chart" id="chart-temp"></div>
     </div>
     <div class="card chart-card">
       <div class="chart-head">
         <span class="chart-title">Tlak hPa</span>
-        <span class="chart-note" id="p-note">prepočítaný na hladinu mora</span>
+        <span class="chart-note">na hladinu mora</span>
       </div>
       <div class="chart" id="chart-pressure"></div>
     </div>
   </section>
-
-  <section class="card days" id="days"></section>
 </main>
+
+<section class="card days" id="days"></section>
 
 <footer class="foot">
   <span id="status">Načítavam údaje…</span>
   <span class="src">Zdroj: Open-Meteo.com</span>
 </footer>
+</div>
 
 <script src="app.js"></script>
 </body>

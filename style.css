@@ -1,157 +1,182 @@
-/* Zámerne jednoduché CSS (flexbox, bez grid/var), aby fungovalo aj v starých
-   Android prehliadačoch. */
+/* Zámerne jednoduché CSS (flexbox s -webkit- predponami, bez grid/var/clamp),
+   aby fungovalo aj v starých Android prehliadačoch.
+   Všetky veľkosti sú v em a základné písmo sa odvíja od menšieho rozmeru
+   obrazovky (vmin), takže stránka vyplní tablet aj veľký monitor. */
 
 * { -webkit-box-sizing: border-box; box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; height: 100%; }
 body {
   font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
-  line-height: 1.3;
+  font-size: 2.2vmin;
+  line-height: 1.25;
   -webkit-text-size-adjust: 100%;
 }
 button { font: inherit; cursor: pointer; }
 
 /* ---------- Tablet (tmavý, farebný) ---------- */
 body.tablet { background: #11161c; color: #e8edf2; }
-body.tablet .card { background: #1b232c; border-radius: 14px; }
-body.tablet .muted, body.tablet .tile-label, body.tablet .tile-sub,
-body.tablet .hero-sub, body.tablet .place-date, body.tablet .chart-note,
-body.tablet .foot { color: #93a1b0; }
+body.tablet .card { background: #1b232c; border-radius: 0.7em; }
+body.tablet .tile-label, body.tablet .tile-sub, body.tablet .hero-sub,
+body.tablet .place-name, body.tablet .chart-note, body.tablet .foot,
+body.tablet .tile small, body.tablet .hero-temp .unit { color: #93a1b0; }
 body.tablet .switch { border: 1px solid #3a4756; }
 body.tablet .switch button { background: transparent; color: #93a1b0; }
 body.tablet .switch button.on { background: #3b82c4; color: #fff; }
 body.tablet .btn { background: #26313d; color: #e8edf2; border: 1px solid #3a4756; }
-body.tablet .hero-icon { color: #f2b84b; }
-body.tablet .day .ic { color: #f2b84b; }
-body.tablet .day-max { color: #e8edf2; }
+body.tablet .hero-icon, body.tablet .day .ic { color: #f2b84b; }
 body.tablet .day-min { color: #93a1b0; }
 body.tablet .err { color: #ff9b8a; }
+body.tablet .day-wind { color: #93a1b0; }
+body.tablet .day-wind.strong { color: #f2b84b; }
+body.tablet .controls { opacity: 0.55; }
 
 /* ---------- Čítačka (e-ink: čiernobiela, bez animácií) ---------- */
 body.eink { background: #fff; color: #000; }
 body.eink * { -webkit-transition: none !important; transition: none !important; -webkit-animation: none !important; animation: none !important; box-shadow: none !important; text-shadow: none !important; }
-body.eink .card { background: #fff; border: 2px solid #000; border-radius: 6px; }
+body.eink .card { background: #fff; border: 2px solid #000; border-radius: 0.4em; }
 body.eink .switch { border: 2px solid #000; }
 body.eink .switch button { background: #fff; color: #000; }
 body.eink .switch button.on { background: #000; color: #fff; }
 body.eink .btn { background: #fff; color: #000; border: 2px solid #000; }
-body.eink .tile-label, body.eink .chart-title { font-weight: bold; }
-body.eink .tile-value { font-weight: bold; }
-body.eink { font-size: 18px; }
-body.eink .hero-temp { font-weight: bold; }
-
-/* ---------- Rozloženie ---------- */
-.top {
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-box-align: center; -webkit-align-items: center; align-items: center;
-  -webkit-flex-wrap: wrap; flex-wrap: wrap;
-  padding: 10px 16px 6px;
-}
-.place { -webkit-box-flex: 1; -webkit-flex: 1 1 auto; flex: 1 1 auto; min-width: 160px; }
-.place-name { font-size: 1.35em; font-weight: bold; }
-.place-date { font-size: 0.95em; }
-.clock { font-size: 2.4em; font-weight: 300; margin: 0 18px; letter-spacing: 1px; }
-body.eink .clock { font-weight: bold; }
-.controls { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-align: center; -webkit-align-items: center; align-items: center; }
-.controls > * { margin-left: 8px; }
-.switch { display: -webkit-box; display: -webkit-flex; display: flex; border-radius: 10px; overflow: hidden; }
-.switch button { border: 0; padding: 8px 14px; }
-.btn { border-radius: 10px; padding: 8px 12px; }
-
-.wrap {
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-flex-wrap: wrap; flex-wrap: wrap;
-  padding: 0 10px;
-}
-.col { padding: 0 6px; }
-.col-left { -webkit-flex: 1 1 380px; flex: 1 1 380px; min-width: 300px; }
-.col-right { -webkit-flex: 1.4 1 420px; flex: 1.4 1 420px; min-width: 300px; }
-.card { padding: 12px 14px; margin-bottom: 12px; }
-
-.hero { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-align: center; -webkit-align-items: center; align-items: center; }
-.hero-icon { width: 110px; height: 110px; -webkit-flex: 0 0 110px; flex: 0 0 110px; margin-right: 14px; }
-.hero-icon svg { width: 100%; height: 100%; }
-.hero-temp { font-size: 5em; line-height: 1; font-weight: 300; }
-.hero-temp .unit { font-size: 0.4em; vertical-align: top; margin-left: 4px; }
-.hero-desc { font-size: 1.35em; margin-top: 4px; }
-.hero-sub { font-size: 1em; margin-top: 4px; }
-
-.tiles {
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-flex-wrap: wrap; flex-wrap: wrap;
-  margin: 0 -6px;
-}
-.tile { width: -webkit-calc(33.333% - 12px); width: calc(33.333% - 12px); margin: 0 6px 12px; min-height: 96px; }
-.tile-label { font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
-.tile-value { font-size: 1.8em; margin: 4px 0 2px; white-space: nowrap; }
-.tile-value small { font-size: 0.5em; }
-.tile-value.sun { font-size: 1.45em; }
-.tile-sub { font-size: 0.85em; }
-.trend { font-size: 0.8em; }
-.wind-arrow { display: inline-block; font-size: 0.8em; }
-
-.chart-head { display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-pack: justify; -webkit-justify-content: space-between; justify-content: space-between; -webkit-flex-wrap: wrap; flex-wrap: wrap; }
-.chart-title { font-size: 1em; }
-.chart-note { font-size: 0.85em; }
-.chart { height: 190px; margin-top: 4px; position: relative; }
-.chart svg { display: block; }
-
-.days {
-  width: -webkit-calc(100% - 12px); width: calc(100% - 12px); margin: 0 6px 12px;
-  display: -webkit-box; display: -webkit-flex; display: flex;
-}
-.day { -webkit-box-flex: 1; -webkit-flex: 1 1 0; flex: 1 1 0; text-align: center; padding: 2px 4px; }
-.day + .day { border-left: 1px solid rgba(147,161,176,0.25); }
+body.eink .tile-label, body.eink .chart-title, body.eink .tile-value,
+body.eink .hero-temp, body.eink .clock, body.eink .day-wind.strong { font-weight: bold; }
 body.eink .day + .day { border-left: 1px solid #000; }
-.day-name { font-weight: bold; }
-.day .ic { width: 44px; height: 44px; margin: 4px auto; }
+
+/* ---------- Celá stránka vyplní výšku obrazovky ---------- */
+.page {
+  height: 100%;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+  padding: 0.5em 0.8em 0.3em;
+}
+.top, .days, .foot { -webkit-flex: none; flex: none; }
+.wrap {
+  -webkit-flex: 1 1 auto; flex: 1 1 auto; min-height: 0;
+  display: -webkit-flex; display: flex;
+}
+.card { padding: 0.6em 0.8em; margin-bottom: 0.6em; }
+
+/* Hlavička: veľký čas a dátum */
+.top {
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+  margin-bottom: 0.3em;
+}
+.clock { font-size: 3.6em; font-weight: 300; line-height: 1; letter-spacing: 0.02em; margin-right: 0.3em; }
+.place { -webkit-flex: 1 1 auto; flex: 1 1 auto; min-width: 0; }
+.place-date { font-size: 1.5em; }
+.place-name { font-size: 1em; }
+.controls { display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; font-size: 0.8em; }
+.controls > * { margin-left: 0.5em; }
+.switch { display: -webkit-flex; display: flex; border-radius: 0.6em; overflow: hidden; }
+.switch button { border: 0; padding: 0.5em 0.9em; }
+.btn { border-radius: 0.6em; padding: 0.5em 0.8em; }
+
+/* Ľavý stĺpec: aktuálne údaje */
+.col-left {
+  width: 46%; -webkit-flex: none; flex: none; margin-right: 0.6em;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+}
+.hero {
+  -webkit-flex: 1 1 auto; flex: 1 1 auto;
+  display: -webkit-flex; display: flex;
+  -webkit-align-items: center; align-items: center;
+}
+.hero-icon { width: 6.5em; height: 6.5em; -webkit-flex: none; flex: none; margin-right: 0.6em; }
+.hero-icon svg { width: 100%; height: 100%; }
+.hero-main { min-width: 0; }
+.hero-temp { font-size: 8em; line-height: 0.95; font-weight: 300; white-space: nowrap; }
+.hero-temp .unit { font-size: 0.35em; vertical-align: top; margin-left: 0.1em; }
+.hero-desc { font-size: 1.7em; margin-top: 0.15em; }
+.hero-sub { font-size: 1.05em; margin-top: 0.2em; }
+
+.big-tiles, .tiles { display: -webkit-flex; display: flex; }
+.tile { -webkit-flex: 1 1 0; flex: 1 1 0; min-width: 0; }
+.tile + .tile { margin-left: 0.6em; }
+.tile-label { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em; }
+.tile-value { font-size: 1.45em; white-space: nowrap; margin: 0.1em 0; }
+.tile-value small { font-size: 0.55em; }
+.tile-sub { font-size: 0.75em; }
+.tile.big .tile-label { font-size: 0.95em; }
+.tile.big .tile-value { font-size: 3.4em; line-height: 1.05; }
+.tile.big .tile-value small { font-size: 0.35em; }
+.tile.big .tile-sub { font-size: 1em; }
+.trend, .wind-arrow { display: inline-block; font-size: 0.6em; vertical-align: 0.15em; }
+
+/* Pravý stĺpec: grafy vyplnia zvyšnú výšku */
+.col-right {
+  -webkit-flex: 1 1 0; flex: 1 1 0; min-width: 0;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+}
+.chart-card {
+  -webkit-flex: 1 1 0; flex: 1 1 0; min-height: 0;
+  display: -webkit-flex; display: flex;
+  -webkit-flex-direction: column; flex-direction: column;
+}
+.chart-head { display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: baseline; align-items: baseline; }
+.chart-title { font-size: 1em; }
+.chart-note { font-size: 0.75em; }
+.chart { -webkit-flex: 1 1 auto; flex: 1 1 auto; min-height: 5em; position: relative; overflow: hidden; margin-top: 0.2em; }
+.chart svg { position: absolute; left: 0; top: 0; display: block; }
+
+/* Predpoveď na dni */
+.days { display: -webkit-flex; display: flex; padding: 0.4em 0.3em; }
+.day { -webkit-flex: 1 1 0; flex: 1 1 0; min-width: 0; text-align: center; padding: 0 0.2em; }
+.day + .day { border-left: 1px solid rgba(147,161,176,0.25); }
+.day-name { font-weight: bold; font-size: 0.95em; }
+.day .ic { width: 2.2em; height: 2.2em; margin: 0.15em auto; }
 .day .ic svg { width: 100%; height: 100%; }
 .day-max { font-size: 1.25em; font-weight: bold; }
-.day-rain { font-size: 0.8em; min-height: 1.2em; }
-
-.foot {
-  display: -webkit-box; display: -webkit-flex; display: flex;
-  -webkit-box-pack: justify; -webkit-justify-content: space-between; justify-content: space-between;
-  padding: 0 16px 10px; font-size: 0.85em;
-}
-
-/* Užšie obrazovky a čítačka na výšku */
-@media (max-width: 820px) {
-  .clock { font-size: 2em; margin: 0 10px; }
-  .tile { width: -webkit-calc(50% - 12px); width: calc(50% - 12px); }
-  .days { -webkit-flex-wrap: wrap; flex-wrap: wrap; }
-  .day { -webkit-flex: 1 1 25%; flex: 1 1 25%; margin-bottom: 6px; }
-}
-@media (max-width: 520px) {
-  .controls { width: 100%; margin-top: 6px; }
-  .controls > *:first-child { margin-left: 0; }
-  .hero-temp { font-size: 4em; }
-  .hero-icon { width: 80px; height: 80px; -webkit-flex: 0 0 80px; flex: 0 0 80px; }
-}
-
-/* Čítačka na výšku: všetko natesno, aby sa zmestilo bez posúvania */
-@media (max-width: 820px) {
-  body.eink .tile { width: -webkit-calc(33.333% - 12px); width: calc(33.333% - 12px); padding: 8px 10px; min-height: 0; }
-  body.eink .tile-value { font-size: 1.5em; }
-  body.eink .tile-value.sun { font-size: 1.2em; }
-  body.eink .tile-sub { font-size: 0.8em; white-space: normal; }
-  body.eink .hero { padding: 8px 12px; }
-  body.eink .hero-icon { width: 80px; height: 80px; -webkit-flex: 0 0 80px; flex: 0 0 80px; }
-  body.eink .hero-temp { font-size: 4em; }
-  body.eink .chart { height: 160px; }
-  body.eink .days { -webkit-flex-wrap: nowrap; flex-wrap: nowrap; }
-  body.eink .day { -webkit-flex: 1 1 0; flex: 1 1 0; padding: 2px 1px; }
-  body.eink .day-name { font-size: 0.85em; }
-  body.eink .day .ic { width: 36px; height: 36px; }
-  body.eink .day-max { font-size: 1.1em; }
-  body.eink .day-min { font-size: 0.9em; }
-  .day:nth-child(5) { border-left: 0; }
-  body.eink .day:nth-child(5) { border-left: 1px solid #000; }
-}
-
-/* vietor v predpovedi */
-.day-wind { font-size: 0.8em; margin-top: 2px; }
+.day-min { font-size: 0.95em; }
+.day-rain { font-size: 0.75em; min-height: 1.2em; }
+.day-wind { font-size: 0.75em; }
 .day-wind small { font-size: 0.85em; }
 .day-wind.strong { font-weight: bold; }
-body.tablet .day-wind { color: #93a1b0; }
-body.tablet .day-wind.strong { color: #f2b84b; }
+
+.foot {
+  display: -webkit-flex; display: flex;
+  -webkit-justify-content: space-between; justify-content: space-between;
+  font-size: 0.7em;
+}
+
+/* Na výšku (čítačka, tablet otočený): všetko pod sebou, grafy dostanú zvyšok */
+@media (orientation: portrait) {
+  .wrap { -webkit-flex-direction: column; flex-direction: column; }
+  .col-left { width: auto; margin-right: 0; }
+  .hero { -webkit-flex: none; flex: none; }
+  .clock { font-size: 3.2em; }
+  .place-date { font-size: 1.3em; }
+}
+
+/* čítačka: tučné písmo je širšie, preto trochu menšie hodnoty */
+.tile-value { overflow: hidden; }
+body.eink .col-left { width: 50%; }
+body.eink .tile.big .tile-value { font-size: 2.9em; }
+body.eink .tiles .tile-value { font-size: 1.2em; }
+body.eink .tiles .tile-sub { font-size: 0.7em; }
+body.eink .tiles .tile-label { font-size: 0.7em; }
+body.eink .tiles { -webkit-flex-wrap: wrap; flex-wrap: wrap; }
+body.eink .tiles .tile { -webkit-flex: 1 1 40%; flex: 1 1 40%; padding: 0.35em 0.6em; margin-bottom: 0.4em; }
+body.eink .tiles .tile:nth-child(odd) { margin-left: 0; }
+body.eink .tiles .tile-value { font-size: 1.15em; display: inline-block; margin-right: 0.4em; }
+body.eink .tiles .tile-label { display: inline-block; margin-right: 0.4em; }
+body.eink .tiles .tile-sub { display: block; }
+.hero { min-height: 0; }
+body.eink .hero-temp { font-size: 6.4em; }
+body.eink .hero-icon { width: 5em; height: 5em; }
+body.eink .hero-desc { font-size: 1.4em; }
+body.eink .tile.big .tile-value { font-size: 2.6em; }
+body.eink .tiles .tile-label, body.eink .tiles .tile-value { vertical-align: baseline; }
+
+/* Užšie obrazovky (napr. 16:10, 4:3): malé dlaždice 2×2 aj na tablete */
+@media (max-aspect-ratio: 17/10) {
+  .tiles { -webkit-flex-wrap: wrap; flex-wrap: wrap; }
+  .tiles .tile { -webkit-flex: 1 1 40%; flex: 1 1 40%; padding: 0.35em 0.6em; margin-bottom: 0.4em; }
+  .tiles .tile:nth-child(odd) { margin-left: 0; }
+  .tiles .tile-label, .tiles .tile-value { display: inline-block; margin-right: 0.4em; vertical-align: baseline; }
+  .tiles .tile-value { font-size: 1.2em; }
+  .tiles .tile-sub { display: block; }
+}

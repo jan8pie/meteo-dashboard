@@ -22,6 +22,8 @@
   var RETRY_MIN = 2;          // pri chybe skúsiť znova o 2 minúty
   var CACHE_KEY = 'meteo-cache-v1';
   var MODE_KEY = 'meteo-mode';
+  var ROT_KEY = 'meteo-rotate';
+  var rotation = 0;
 
   var DAYS_SHORT = ['Ne', 'Po', 'Ut', 'St', 'Št', 'Pi', 'So'];
   var DAYS_LONG = ['nedeľa', 'pondelok', 'utorok', 'streda', 'štvrtok', 'piatok', 'sobota'];
@@ -65,6 +67,28 @@
     if (save) { try { localStorage.setItem(MODE_KEY, mode); } catch (e) {} }
     render();
   }
+  /* ---------------- Otočenie stránky ---------------- */
+
+  function getRotation() {
+    var q = /[?&]otocit=(0|90|270)/.exec(location.search);
+    if (q) return +q[1];
+    try { var r = +localStorage.getItem(ROT_KEY); if (r === 90 || r === 270) return r; } catch (e) {}
+    return 0;
+  }
+  function applyLayout() {
+    var cls = '';
+    if (rotation) cls = 'rot' + rotation;
+    else if (window.innerHeight > window.innerWidth) cls = 'port';
+    document.documentElement.className = cls;
+    $('rotate').title = 'Otočiť stránku (teraz ' + rotation + '°)';
+  }
+  function cycleRotation() {
+    rotation = rotation === 0 ? 90 : (rotation === 90 ? 270 : 0);
+    try { localStorage.setItem(ROT_KEY, '' + rotation); } catch (e) {}
+    applyLayout();
+    render();
+  }
+
   function isEink() { return document.body.className === 'eink'; }
 
   /* ---------------- Celá obrazovka a zapnutá obrazovka ---------------- */
@@ -498,6 +522,9 @@
       $('fullscreen').style.display = 'none';
     }
     $('refresh').onclick = function () { load(); };
+    $('rotate').onclick = cycleRotation;
+    rotation = getRotation();
+    applyLayout();
 
     loadCache();
     setMode(getMode(), false);
@@ -519,7 +546,7 @@
 
     var rt = null;
     window.addEventListener('resize', function () {
-      clearTimeout(rt); rt = setTimeout(render, 250);
+      clearTimeout(rt); rt = setTimeout(function () { applyLayout(); render(); }, 250);
     });
   }
 
